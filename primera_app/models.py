@@ -1,66 +1,105 @@
 from django.db import models
+import datetime
+
+ahora = datetime.datetime.now
 
 # Create your models here.
+
+
 class Nacionalidad(models.Model):
     pais = models.CharField(max_length=50, null=False)
     nacionalidad = models.CharField(max_length=50, null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_app = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=ahora)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
 class Autor(models.Model):
-    nombre = models.CharField(max_length=250,null=False)
+    id_nacionalidad = models.ForeignKey(
+        Nacionalidad, on_delete=models.CASCADE, null=True)
+    nombre = models.CharField(max_length=250, null=False)
     pseudonimo = models.CharField(max_length=50, null=True)
-    id_nacionalidad = models.ForeignKey(Nacionalidad, on_delete=models.CASCADE)
-    bio = models.TextField
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_app = models.DateTimeField(auto_now_add=True)
+    biografia = models.TextField(null=True)
+    created_at = models.DateTimeField(default=ahora)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
 class Comuna(models.Model):
-    codigo = models.CharField(max_length=5, null=False)
-    comuna = models.CharField(max_length=50, null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_app = models.DateTimeField(auto_now_add=True)
+    codigo_comuna = models.CharField(max_length=5, null=False)
+    nombre_comuna = models.CharField(max_length=50, null=False)
+    created_at = models.DateTimeField(default=ahora)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
 class Direccion(models.Model):
-    id_comuna = models.ForeignKey(Comuna,on_delete=models.CASCADE)
-    calle = models.CharField(max_length=50, null=True)
-    numero = models.CharField(max_length=20, null=True)
+    id_comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE, null=False)
+    calle = models.CharField(max_length=50, null=False, default='')
+    numero = models.CharField(max_length=10, null=False, default='')
     departamento = models.CharField(max_length=10, null=True)
     detalles = models.TextField(null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_app = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=ahora)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
 class Biblioteca(models.Model):
-    nombre = models.CharField(max_length=40, null=False)
-    direccion = models.CharField(max_length=80, null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_app = models.DateTimeField(auto_now_add=True)
+    id_direccion = models.ForeignKey(
+        Direccion, on_delete=models.CASCADE, null=True)
+    nombre_biblioteca = models.CharField(max_length=100, null=False)
+    web = models.CharField(max_length=255, null=True)
+    habilitado = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=ahora)
+    updated_at = models.DateTimeField(auto_now=True)
 
-class Libro(models.Model):
-    id_biblioteca = models.ForeignKey(Biblioteca, on_delete=models.CASCADE)
-    genero = models.CharField(max_length=15, null=False)
-    titulo = models.CharField(max_length=40, null=False)
-    id_autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
-    paginas = models.CharField(max_length=700, null=False)
-    copias = models.CharField(max_length=100, null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_app = models.DateTimeField(auto_now_add=True)
 
 class Lector(models.Model):
-    nombre = models.CharField(max_length=60, null=False)
-    rut = models.CharField(max_length=10, null=False)
+    id_biblioteca = models.ForeignKey(
+        Biblioteca, on_delete=models.CASCADE, null=False)
+    id_direccion = models.ForeignKey(
+        Direccion, on_delete=models.CASCADE, null=True)
+    rut_lector = models.IntegerField(null=False, unique=True)
     digito_verificador = models.CharField(max_length=1, null=False)
-    correo = models.CharField(max_length=30, null=True)
-    telefono = models.CharField(max_length=15, null=False)
-    direccion = models.CharField(max_length=60, null=False)
-    id_biblioteca = models.ForeignKey(Biblioteca, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_app = models.DateTimeField(auto_now_add=True)
+    nombre_lector = models.CharField(max_length=255, null=False)
+    correo_lector = models.CharField(max_length=255, null=True)
+    habilitado = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=ahora)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class TipoCategoria(models.Model):
+    tipo_categoria = models.CharField(max_length=50, null=False)
+    habilitado = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=ahora)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Categoria(models.Model):
+    id_tipo_categoria = models.ForeignKey(
+        TipoCategoria, on_delete=models.CASCADE, null=False)
+    categoria = models.CharField(max_length=100, null=False)
+    descripcion = models.CharField(max_length=255, null=True)
+    habilitado = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=ahora)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Libro(models.Model):
+    id_biblioteca = models.ForeignKey(
+        Biblioteca, on_delete=models.CASCADE, null=False)
+    id_categoria = models.ForeignKey(
+        Categoria, on_delete=models.CASCADE, null=True)
+    id_autor = models.ForeignKey(Autor, on_delete=models.CASCADE, null=False)
+    titulo = models.CharField(max_length=255, null=False)
+    paginas = models.IntegerField(null=False)
+    copias = models.IntegerField(null=False)
+    ubicacion = models.CharField(max_length=255, null=False)
+    fisico = models.BooleanField(default=True)
+    habilitado = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=ahora)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
 class Prestamo(models.Model):
-    id_libro = models.ForeignKey(Libro, on_delete=models.CASCADE)
-    id_lector = models.ForeignKey(Lector, on_delete=models.CASCADE)
-    fecha_prestamo = models.DateField
-    fecha_devolucion = models.DateField
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_app = models.DateTimeField(auto_now_add=True)
+    id_libro = models.ForeignKey(Libro, on_delete=models.CASCADE, null=False)
+    id_lector = models.ForeignKey(Lector, on_delete=models.CASCADE, null=False)
+    fecha_prestamo = models.DateTimeField(auto_now_add=True)
+    fecha_devolucion = models.DateField(null=True)
+    fecha_retorno = models.DateTimeField(null=True)

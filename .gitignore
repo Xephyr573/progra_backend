@@ -1,0 +1,10 @@
+.env
+primera_app/__pycache__/models.cpython-313.pyc
+primera_app/__pycache__/serializer.cpython-313.pyc
+primera_app/__pycache__/models.cpython-313.pyc
+primera_app/__pycache__/urls.cpython-313.pyc
+primera_app/__pycache__/views.cpython-313.pyc
+primera_app/migrations/__pycache__/0003_categoria_tipocategoria_and_more.cpython-313.pyc
+primera_app/__pycache__/models.cpython-313.pyc
+drf/__pycache__/settings.cpython-313.pyc
+drf/__pycache__/urls.cpython-313.pyc
