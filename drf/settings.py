@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'primera_app',
     'rest_framework',
+    'drf_yasg',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [

@@ -17,9 +17,39 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from primera_app import views
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from django.contrib.auth import views as auth_views
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Documentacion API primera_app",
+        default_version='v1',
+        description="primera_app",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="mi_correo@test.test"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.pagina_inicio, name='home'),
     path('primera_app/', include('primera_app.urls')),
+    
+    #URL´s para aplicacion particular
+    path ('primera_app/', include('primera_app.urls')),
+    
+    #URL´s para documentacion de API
+    path('swagger/', schema_view.with_ui('swagger',
+        cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc',
+        cache_timeout=0), name='schema-redoc'),
+    
+    #URl´s de autenticacion
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('registro/', views.registro, name='registro'),
 ]
