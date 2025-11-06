@@ -1,5 +1,12 @@
-{% extends "plantilla_base.html" %} {% block content %}
-<form method="post" action="{% url 'login' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
 <div>
 <label for="username">Nombre Usuario:</label>
@@ -21,7 +28,8 @@ Inténtalo de nuevo.</p>
 <p><a href="{% url 'password_reset' %}">¿Olvidaste tu
 contraseña?</a></p>
 <form action="(% urL "Logout' %)" method="post">
-(% csrf_token %)
 <button type="submit" cLass="nav-Link", Salir (% iconic_icon "Log-out" %)> </button>
 </form>
-{% endblock %}
+</body>
+</html>
+
