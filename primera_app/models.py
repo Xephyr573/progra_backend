@@ -7,6 +7,7 @@ ahora = datetime.datetime.now
 
 # Create your models here.
 
+
 def validar_rut(rut):
     try:
         rut_valido = Rut(rut)
