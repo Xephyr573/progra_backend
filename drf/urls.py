@@ -35,7 +35,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.pagina_inicio, name='home'),
+    path('inicio/', views.pagina_inicio, name='home'),
     path('primera_app/', include('primera_app.urls')),
     
     #URL´s para aplicacion particular
@@ -49,7 +49,7 @@ urlpatterns = [
     
     #URl´s de autenticacion
     path('accounts/', include('django.contrib.auth.urls')),
-    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     #path('registro/', views.registro, name='registro'),
 ]

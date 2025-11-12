@@ -16,3 +16,5 @@ drf/__pycache__/wsgi.cpython-313.pyc
 primera_app/__pycache__/__init__.cpython-313.pyc
 primera_app/__pycache__/admin.cpython-313.pyc
 primera_app/__pycache__/apps.cpython-313.pyc
+drf/__pycache__/settings.cpython-313.pyc
+drf/__pycache__/urls.cpython-313.pyc

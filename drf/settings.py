@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 from decouple import config
 
-APPEND_SLASH=False
+APPEND_SLASH=True
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/inicio/'
 # Application definition
 
 INSTALLED_APPS = [
@@ -127,9 +127,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR/"static",
-]
+#STATICFILES_DIRS = [
+#    BASE_DIR/"static",
+#]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
